@@ -1,0 +1,373 @@
+---
+title: "Tutorial 1 RMD"
+author: "Ze Yu"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Tutorial 1 RMD -----------------------------------------------------------
+
+This first tutorial will go through how the elementary basics of getting 
+started with R with a focus on high dimensional time series modelling.
+
+
+
+## R Basics
+
+R is a free, open source statistical programming language. It remains 
+particularly suited for data visualization, data analysis and data modelling
+given the work of its extensive open source community. 
+
+Although it is not as general purpose as Python, or as efficient as (JIT) 
+compiled lanaguages such as C++/Julia, its combination of capabilities in 
+matrix algebra and extensive library of packages make it arguably the most ideal
+all-in-one language.
+
+R remains especially popular in academia, and chances are if there are new 
+econometric/statistical methods introduced, one of their first implementations
+will be done using R. For example, more advanced models for times series 
+such as stochastic volatility, or dynamic factors models typically have much 
+better libraries and support in R, rather than Python.
+
+```{r, echo = FALSE, results = "hide"}
+library(tidyverse)
+library(tsibble)
+library(xts)
+
+## Read in FREDMD DATA
+# You can download the data directly using this link
+# https://files.stlouisfed.org/files/htdocs/fred-md/monthly/current.csv
+fredmd <- read_csv(
+  "https://files.stlouisfed.org/files/htdocs/fred-md/monthly/current.csv"
+  )
+# OR, download the "current.csv" and read it in manually
+
+# Note that the FREDMD csv file has a whole bunch of extra rows/formatting
+# That is very useful, but difficult for read_csv to parse correctly
+# read_csv can take a bunch of different arguments to help with this
+# These options can be difficult to understand
+# and a good way to visualise this is via the GUI option to import a dataset
+# if you are using RStudio
+```
+
+## Functions and Variables
+
+If you are new to programming, it helps tremendously to read over the basics of 
+this section very carefully.
+
+Almost everything in R can be stored(saved) as a variable. 
+
+
+
+## R Markdown
+
+The "base" way of writing R code is using an R script, which are simply .txt
+files with a .R extension.
+
+However, this sort of source code is not ideal for humans to read, and ideally
+you would want to produce a document that can weave code, typesetted mathematics
+and output such as plots all in one document.
+
+R Markdown is an extension to the markdown language, and allows for this.
+
+To create a new rmarkdown file, first install the "rmarkdown" package, refresh
+RStudio, and you shoul dbe able to create a new rmarkdown file from the GUI.
+
+In R markdown, any text you type in is rendered as normal text, and any code 
+needs to be wrapped up in a normal code cell. 
+
+```{r}
+
+```
+
+## Packages
+
+## Useful Package "EcoSystems"
+
+Coding without the help of packages is also known as coding in "base" R. 
+Although there may be legitimate reasons for doing this (such as building your
+own package and not reducing dependencies), it is not recommended for practical
+purposes. 
+
+Some packages are very large and involve many different packages. 
+
+The pre-eminent example of this is the aforementioned tidyverse package, which
+is an example of a package "ecosystem".
+
+Other ecosystems exist. 
+
+For the purposes of high dimensional time series regression, there are 
+broadly two other ecosystems you should be aware of and which we will be using.
+
+
+
+### Tidyverse
+
+One of the premier ecosystems in R is called the tidyverse. tidyverse is a 
+"meta-package", itself containing many other packages. 
+
+
+### forecast
+
+The forecast package is developed mainly for use with ts data structures.
+The maintainers of the package have introduced a new tidy time series data 
+structure, and as such most of the functionality of forecast has been superseded
+byt he "tidyverts" ecosystem which uses the tsibble data structure.
+
+
+
+
+### Tidy time series (tidyverts)
+
+The tidyverts ecosystem consists of tsibble, fable (forecasting), and
+feats (feature extraction). 
+
+
+
+### zoo/xts ecosystem
+
+Technically not an ecosystem by themselves, zoo and xts are extensions of the 
+base ts data structure to multiple time series. 
+
+zoo is an extension of ts, and xts is in turn an extension of zoo.
+
+In general, xts should be be backwards compatible with zoo and in turn ts, 
+however this is not always the case. 
+
+Many packages such as strucchange (for structural breaks), rugarch (garch models),
+rmgarch, stochvol, etc work with built in support for zoo formats, but not 
+tsibble.
+
+These data structures are much older than tsibble, and as such for many older
+packages will actually have much better comptability. 
+
+
+### tsbox
+
+Manually converting between the different time series formats can be very tedious
+and prone to errors. 
+
+In lieue of the (in)famous xkcd, tsbox provides a selection of functions which
+will seamlessly convert different formats into one another.
+
+It also introduces a tsbox() class which is meant to be class agnostic (converted
+on the fyl as necessary), but this is finicky to get working and not recommdned.
+
+As a bonus, it also contains a selection of very useful plotting functions.
+
+
+## Data Structures
+
+The previous section provided a run down of the different ecosystems available.
+Which one should you use? The answer is like any good analyst, all of them.
+Similar to how there is no one answer for, say, should one learn R/Python/Julia,
+there is no one answer, and often it is best to work with a mix of all options.
+
+In general, tsibble is best for exploratory data analysis (cleaning, plotting),
+whereas zoo/xts have much wider support for modelling via packages.
+
+As such, it is important that you are comfortable with seamlessly working with
+all different data structures, understand what limitations they all have
+and hence when to use one over another.
+
+
+## Data Structures for Time series
+
+There are broadly 3 different data structures available in base R for itme 
+series data. These are base R's ts(), zoo/xts, and tsibble().
+
+```{r}
+
+```
+
+## Converting between different Time Series Formats
+
+
+
+
+## ARIMA Modelling
+We end this tutorial by finishing with some basic ARIMA modelling
+There are multiple different implementations available for fitting ARIMA 
+models.  
+
+\newpage
+
+# Tutorial 2 - EDA of Time Series ------------------------------------------
+
+This tutorial will focus on Exploratory Data Analysis (EDA) of high dimensional
+time series. 
+
+Exploratory Data Analysis is the most important step in any project pipeline.
+This is the first step, and any errors you make here will show up and affect
+all subsequent results.
+
+Unfortunately this is also the most boring step, and can be quite tedious. 
+
+
+Exploratory Data Analysis encompasses data collection, data cleaning, 
+descriptive analysis.
+
+Although this may seem simple, this step alone is so large that there 
+are entire careers that can be spawned out of this.
+
+## Missing Data
+
+
+### Imputation
+
+### 
+
+
+
+
+
+## Descriptive Analysis
+
+
+### 
+
+### Tidy Data
+
+Tidy data is a specific format of data which makes it easy for EDA, and 
+subsequent analysis.
+
+Because time series data is quite different to cross sectional data, the 
+definition of tidy is also more ambiguous.
+
+Tidy format for time series are either "wide" or "long". 
+"Wide" data is typically better for readability and data modelling, whereas
+"long" data is typically better for visualization.
+
+To convert between wide and long formats, use the pivot_wider and pivot_longer
+commands. The syntax for this is a bit fiddly, so make sure you practice this
+a lot!
+
+## Data Visualization
+Data visualization is typically a course onto itself.
+
+The line plot is the most basic (t on x axis, y variable on y axis), and of
+course you can extend this to plot multiple different time series.
+A good rule of thumb for visualizing multiple time series to plot, at most, 4 
+time series. This of course depends on the specific dataset, but generally keeps
+the resulting line plots readable and not too messy.
+
+
+
+
+
+
+## Time Series Features
+The most technically demanding aspect of this tutorial is the construction
+of different time series features and their subsequent analysis.
+
+Which features you
+
+\newpage
+
+# Tutorial 3 - Pre - testing/treating Data
+
+Most time series models require the assumption that the underlying DGP is 
+stationary.
+
+Stationarity by definition means that the data series has a finite, long run 
+mean. An AR(1) process is stationary if its AR coefficient is less than 1 in 
+absolute value.
+
+Unfortunately, many time series are not stationary to start off with and 
+these series need to be pre-treated.
+
+In other contexts, modelling the level of a time series may not be of that
+much interest to a practitioner, and instead 
+
+## Logs
+
+
+
+## Differences
+
+
+
+## Log Differences
+
+
+
+## Higher order differencing
+
+The above 
+
+## Long Differences
+
+## Unit roots and testing
+
+
+
+## FREDMD transformation codes
+
+The famous FREDMD dataset follows the extensive literature by Stock and Watson
+and offers suggested transformations (note that not all of these may be 
+sensible), for the purposes of inducing stationarity.
+
+The codes are:
+
+See if you can implement the the above transformation codes on a univariate time
+series!
+
+Challenge: code up a function which given a T x N panel, and corresponding
+N length vector of transformation codes, returns a transformed T x N panel.
+
+
+
+Bonus challenge: code up a function which given an already transformed panel,
+and corresponding N length vector of transformation codes, "undos" the 
+transformation and returns the original T x N panel of level data.
+
+What extra information do you need to do this? 
+
+\newpage
+
+# Tutorial 4 - Univariate Models
+
+\newpage
+
+# Tutorial 5 - Univariate Models
+
+
+\newpage
+
+# Tutorial 6 - Univariate Models
+
+\newpage
+
+
+# Tutorial 7 - Multivariate Models
+
+\newpage
+
+# Tutorial 8 - Multivariate Models - VARs
+
+```{r}
+library(vars)
+```
+
+\newpage
+
+# Tutorial 9 - Multivariate Models - 
+
+\newpage
+
+# Tutorial 10 - Dynamic Factor Models
+
+
+
+\newpage
+
+# Tutorial 11 - 
+
+\newpage
+
+# Tutorial 12 - 
+
+\newpage
